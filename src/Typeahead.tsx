@@ -53,30 +53,34 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
   return (
     <ClickAwayListener onClickAway={() => setShowList(false)}>
       <div className={className} onKeyDown={handleEscape}>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => {
-            handleChange(e.target.value);
-          }}
-        />
-        <div className="highlight">
-          {showList &&
-            list.filter(listFilter).map((item, idx) => (
-              <div className="typeahead-option" key={item}>
-                <button
-                  className="typeahead-button"
-                  onClick={() => {
-                    handleListitemClick(item);
-                  }}
-                >
-                  <span className="option-highlight">
-                    {getHighlightedSubstring(item)}
-                  </span>
-                  <span>{getEndSubstring(item)}</span>
-                </button>
-              </div>
-            ))}
+        <div className="typeahead">
+          <input
+            className="typeahead-text"
+            type="text"
+            value={text}
+            onChange={(e) => {
+              handleChange(e.target.value);
+            }}
+          />
+          {showList && list.filter(listFilter).length > 0 && (
+            <div className="options-pane">
+              {list.filter(listFilter).map((item, idx) => (
+                <div className="typeahead-option" key={item}>
+                  <button
+                    className="typeahead-button"
+                    onClick={() => {
+                      handleListitemClick(item);
+                    }}
+                  >
+                    <span className="option-highlight">
+                      {getHighlightedSubstring(item)}
+                    </span>
+                    <span>{getEndSubstring(item)}</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </ClickAwayListener>

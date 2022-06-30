@@ -1,14 +1,25 @@
 .App {
   font-family: sans-serif;
   text-align: center;
+  max-width: 300px;
 }
 
 .option-highlight {
   font-weight: bold;
 }
 
+.typeahead-text {
+  width: 100%;
+}
+
+.options-pane {
+  border: 1px solid black;
+}
+
 .typeahead-button {
   border: none;
+  width: 100%;
+  text-align: left;
   background-color: white;
 }
 
