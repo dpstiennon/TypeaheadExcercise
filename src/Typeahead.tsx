@@ -31,6 +31,9 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
     }
   };
 
+  //Might be premature optimization.
+  //But I know parsing regex is a slightly heavy operation
+  //and I'd prefer not to do it for every single item here
   const filterRegExp = useMemo(() => {
     return new RegExp(`^${text.trim()}`, "i");
   }, [text]);
