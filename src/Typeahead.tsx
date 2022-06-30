@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useMemo } from "react";
 
 // Ahem!  I know the requirements asked for 'propTypes and other best practices'
 // just me being opinionated - I wouldn't consider propTypes a best practice
@@ -24,8 +24,20 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
     setText(item);
   };
 
+  const filterRegExp = useMemo(() => {
+    return new RegExp(`^${text.trim()}`, "i");
+  }, [text]);
+
   const listFilter = (item: string) => {
-    return item.match(new RegExp(`^${text.trim()}`, "i"));
+    return item.match(filterRegExp);
+  };
+
+  const getHighlightedSubstring = (item: string) => {
+    return item.substring(0, text.trim().length);
+  };
+
+  const getEndSubstring = (item: string) => {
+    return item.substring(text.trim().length);
   };
 
   return (
@@ -37,16 +49,17 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
           handleChange(e.target.value);
         }}
       />
-      <div>
+      <div className="">
         {showList &&
           list.filter(listFilter).map((item) => (
-            <li
+            <div
               onClick={() => {
                 handleListitemClick(item);
               }}
             >
-              {item}
-            </li>
+              <strong>{getHighlightedSubstring(item)}</strong>
+              <span>{getEndSubstring(item)}</span>
+            </div>
           ))}
       </div>
     </div>
