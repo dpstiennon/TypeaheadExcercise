@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Typeahead from "./Typeahead";
+import App from "./App";
 import "./styles.css";
 
 /**
@@ -81,6 +82,9 @@ const carBrands = [
 
 //note!
 ReactDOM.render(
-  React.createElement(Typeahead, { list: carBrands, className: "App" }, null),
+  // React.createElement(Typeahead, { list: carBrands, className: "App" }, null),
+  <App>
+    <Typeahead list={carBrands} />
+  </App>,
   document.getElementById("root")
 );

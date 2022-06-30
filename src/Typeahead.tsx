@@ -53,7 +53,6 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
         <input
           type="text"
           value={text}
-          tabIndex={0}
           onChange={(e) => {
             handleChange(e.target.value);
           }}
