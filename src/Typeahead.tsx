@@ -4,6 +4,7 @@ import React, { FC, useState } from "react";
 // just me being opinionated - I wouldn't consider propTypes a best practice
 // I think its better to either go for Typescript (better static checking and more concise)
 // or embrace the dynamic nature of Javascript
+// I'm opting for the Typescript answer
 interface TypeaheadProps {
   list: string[];
   className?: string;
@@ -14,8 +15,17 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
   const [showList, setShowList] = useState(false);
 
   const handleChange = (newValue: string) => {
-    setShowList(newValue.trim().length > 1);
+    setShowList(newValue.trim().length > 0);
     setText(newValue);
+  };
+
+  const handleListitemClick = (item: string) => {
+    setShowList(false);
+    setText(item);
+  };
+
+  const listFilter = (item: string) => {
+    return item.match(new RegExp(`^${text.trim()}`, "i"));
   };
 
   return (
@@ -27,7 +37,18 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
           handleChange(e.target.value);
         }}
       />
-      <div>{showList && list.map((item) => <li>{item}</li>)}</div>
+      <div>
+        {showList &&
+          list.filter(listFilter).map((item) => (
+            <li
+              onClick={() => {
+                handleListitemClick(item);
+              }}
+            >
+              {item}
+            </li>
+          ))}
+      </div>
     </div>
   );
 };
