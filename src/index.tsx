@@ -80,9 +80,7 @@ const carBrands = [
   "Volvo"
 ];
 
-//note!
 ReactDOM.render(
-  // React.createElement(Typeahead, { list: carBrands, className: "App" }, null),
   <App>
     <Typeahead list={carBrands} />
   </App>,

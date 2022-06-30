@@ -5,7 +5,8 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 
 //Note - had a devil of a time getting tests running with dependency incompatibilities.
-//Eventually just update all dependencies to latest version
+//Eventually just updated all dependencies to latest versions
+// this is why React is now at version 18
 
 describe("<Typeahead>", () => {
   it("should show blank textbox by default", () => {

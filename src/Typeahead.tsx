@@ -64,7 +64,7 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
           />
           {showList && list.filter(listFilter).length > 0 && (
             <div className="options-pane">
-              {list.filter(listFilter).map((item, idx) => (
+              {list.filter(listFilter).map((item) => (
                 <div className="typeahead-option" key={item}>
                   <button
                     className="typeahead-button"
