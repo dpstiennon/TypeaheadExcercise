@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from "react";
+import React, { FC, useState, useMemo, ReactKeyboardEvent } from "react";
 
 // Ahem!  I know the requirements asked for 'propTypes and other best practices'
 // just me being opinionated - I wouldn't consider propTypes a best practice
@@ -24,6 +24,11 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
     setText(item);
   };
 
+  const handleInputKeypress = (e: ReactKeyboardEvent<HTMLInputElement>) => {
+    if (e.code === "Tab") {
+    }
+  };
+
   const filterRegExp = useMemo(() => {
     return new RegExp(`^${text.trim()}`, "i");
   }, [text]);
@@ -45,20 +50,27 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
       <input
         type="text"
         value={text}
+        tabIndex={0}
         onChange={(e) => {
           handleChange(e.target.value);
         }}
       />
-      <div className="">
+      <div className="highlight">
         {showList &&
-          list.filter(listFilter).map((item) => (
-            <div
-              onClick={() => {
-                handleListitemClick(item);
-              }}
-            >
-              <strong>{getHighlightedSubstring(item)}</strong>
-              <span>{getEndSubstring(item)}</span>
+          list.filter(listFilter).map((item, idx) => (
+            <div className="typeahead-option">
+              <button
+                key={item}
+                className="typeahead-button"
+                onClick={() => {
+                  handleListitemClick(item);
+                }}
+              >
+                <span className="option-highlight">
+                  {getHighlightedSubstring(item)}
+                </span>
+                <span>{getEndSubstring(item)}</span>
+              </button>
             </div>
           ))}
       </div>

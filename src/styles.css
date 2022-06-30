@@ -2,3 +2,21 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.option-highlight {
+  font-weight: bold;
+}
+
+.typeahead-button {
+  border: none;
+  background-color: white;
+}
+
+.typeahead-button:hover {
+  background-color: darkgray;
+}
+
+.typeahead-option:hover {
+  background-color: darkgray;
+  color: white;
+}
