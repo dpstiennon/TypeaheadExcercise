@@ -1,7 +1,8 @@
-import React, { FC, useState, useMemo, ReactKeyboardEvent } from "react";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import React, { FC, useState, useMemo, KeyboardEvent } from "react";
 
 // Ahem!  I know the requirements asked for 'propTypes and other best practices'
-// just me being opinionated - I wouldn't consider propTypes a best practice
+// just me being opinionated - I wouldn't consider propTypes a great practice
 // I think its better to either go for Typescript (better static checking and more concise)
 // or embrace the dynamic nature of Javascript
 // I'm opting for the Typescript answer
@@ -24,8 +25,9 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
     setText(item);
   };
 
-  const handleInputKeypress = (e: ReactKeyboardEvent<HTMLInputElement>) => {
-    if (e.code === "Tab") {
+  const handleEscape = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Escape") {
+      setShowList(false);
     }
   };
 
@@ -46,35 +48,36 @@ const Typeahead: FC<TypeaheadProps> = ({ list, className = "" }) => {
   };
 
   return (
-    <div className={className}>
-      <input
-        type="text"
-        value={text}
-        tabIndex={0}
-        onChange={(e) => {
-          handleChange(e.target.value);
-        }}
-      />
-      <div className="highlight">
-        {showList &&
-          list.filter(listFilter).map((item, idx) => (
-            <div className="typeahead-option">
-              <button
-                key={item}
-                className="typeahead-button"
-                onClick={() => {
-                  handleListitemClick(item);
-                }}
-              >
-                <span className="option-highlight">
-                  {getHighlightedSubstring(item)}
-                </span>
-                <span>{getEndSubstring(item)}</span>
-              </button>
-            </div>
-          ))}
+    <ClickAwayListener onClickAway={() => setShowList(false)}>
+      <div className={className} onKeyDown={handleEscape}>
+        <input
+          type="text"
+          value={text}
+          tabIndex={0}
+          onChange={(e) => {
+            handleChange(e.target.value);
+          }}
+        />
+        <div className="highlight">
+          {showList &&
+            list.filter(listFilter).map((item, idx) => (
+              <div className="typeahead-option" key={item}>
+                <button
+                  className="typeahead-button"
+                  onClick={() => {
+                    handleListitemClick(item);
+                  }}
+                >
+                  <span className="option-highlight">
+                    {getHighlightedSubstring(item)}
+                  </span>
+                  <span>{getEndSubstring(item)}</span>
+                </button>
+              </div>
+            ))}
+        </div>
       </div>
-    </div>
+    </ClickAwayListener>
   );
 };
 

@@ -12,11 +12,12 @@
   background-color: white;
 }
 
-.typeahead-button:hover {
+.typeahead-option:hover {
   background-color: darkgray;
+  color: white;
 }
 
-.typeahead-option:hover {
+.typeahead-option:hover button {
   background-color: darkgray;
   color: white;
 }
